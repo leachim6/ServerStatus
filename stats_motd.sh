@@ -6,8 +6,8 @@
 
 PROCCOUNT=`ps -Afl | wc -l`
 PROCCOUNT=`expr $PROCCOUNT - 5`
-IPADDR=`$HOME/bin/ipa.sh eth0`
-PRIVIP=`$HOME/bin/ipa.sh eth1`
+IPADDR=`$(dirname "$0")/ipa.sh eth0`
+PRIVIP=`$(dirname "$0")/ipa.sh eth1`
 KERNEL=`uname -r`
 UTIME=`uptime | sed 's/,  load.*//'`
 LOADAVG=`uptime | sed 's/.*average://'`
@@ -24,7 +24,7 @@ PRIVILEGED="Regular User"
 fi
 
 ## System Stats Section
-echo -e "
+echo "
 \033[0;35m|―――――――――――――――――: \033[0;37mSystem Data\033[0;35m :――――――――――――――――――――
 \033[0;35m|  \033[0;37mHostname    \033[0;35m= \033[1;32m`uname -n`
 \033[0;35m|  \033[0;37mPublic IP   \033[0;35m= \033[1;32m$IPADDR
@@ -33,7 +33,7 @@ echo -e "
 \033[0;35m|  \033[0;37mDistro      \033[0;35m= \033[1;32m$DISTRO
 \033[0;35m|  \033[0;37mUptime      \033[0;35m=\033[1;32m$UTIME
 \033[0;35m|  \033[0;37mLoad Avg    \033[0;35m=\033[1;32m$LOADAVG
-\033[0;35m|  \033[0;37mCPU         \033[0;35m=\033[1;32m$CPUINFO @ $CPUFREQ mhz
+\033[0;35m|  \033[0;37mCPU         \033[0;35m=\033[1;32m$CPUINFO
 \033[0;35m|  \033[0;37mMemory      \033[0;35m= \033[1;32m$MEMINFO MB
 \033[0;35m|―――――――――――――――――: \033[0;37mUser Data\033[0;35m :――――――――――――――――――――――
 \033[0;35m|  \033[0;37mUsername    \033[0;35m= \033[1;32m$LOGNAME
