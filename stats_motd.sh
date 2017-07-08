@@ -3,11 +3,14 @@
 # Revised by Mike Donaghy
 # Version 0.2 EVN BETR EDITION
 
+# Load Bash Colors Library
+. $(dirname "0")/bash_colors.sh
 
+HNAME=`uname -n`
 PROCCOUNT=`ps -Afl | wc -l`
 PROCCOUNT=`expr $PROCCOUNT - 5`
-IPADDR=`$HOME/bin/ipa.sh eth0`
-PRIVIP=`$HOME/bin/ipa.sh eth1`
+IPADDR=`$(dirname "0")/ipa.sh eth0`
+PRIVIP=`$(dirname "0")/ipa.sh eth1`
 KERNEL=`uname -r`
 UTIME=`uptime | sed 's/,  load.*//'`
 LOADAVG=`uptime | sed 's/.*average://'`
@@ -24,40 +27,41 @@ PRIVILEGED="Regular User"
 fi
 
 ## System Stats Section
-echo -e "
-\033[0;35m|―――――――――――――――――: \033[0;37mSystem Data\033[0;35m :――――――――――――――――――――
-\033[0;35m|  \033[0;37mHostname    \033[0;35m= \033[1;32m`uname -n`
-\033[0;35m|  \033[0;37mPublic IP   \033[0;35m= \033[1;32m$IPADDR
-\033[0;35m|  \033[0;37mPrivate IP  \033[0;35m= \033[1;32m$PRIVIP
-\033[0;35m|  \033[0;37mKernel      \033[0;35m= \033[1;32m$KERNEL
-\033[0;35m|  \033[0;37mDistro      \033[0;35m= \033[1;32m$DISTRO
-\033[0;35m|  \033[0;37mUptime      \033[0;35m=\033[1;32m$UTIME
-\033[0;35m|  \033[0;37mLoad Avg    \033[0;35m=\033[1;32m$LOADAVG
-\033[0;35m|  \033[0;37mCPU         \033[0;35m=\033[1;32m$CPUINFO @ $CPUFREQ mhz
-\033[0;35m|  \033[0;37mMemory      \033[0;35m= \033[1;32m$MEMINFO MB
-\033[0;35m|―――――――――――――――――: \033[0;37mUser Data\033[0;35m :――――――――――――――――――――――
-\033[0;35m|  \033[0;37mUsername    \033[0;35m= \033[1;32m$LOGNAME
-\033[0;35m|  \033[0;37mPrivileges  \033[0;35m= \033[1;32m$PRIVILEGED
-\033[0;35m|  \033[0;37mTMUX        \033[0;35m= \033[1;32m$TMUXS Windows
-\033[0;35m|  \033[0;37mProcesses   \033[0;35m= \033[1;32m$PROCCOUNT of `ulimit`
-\033[0;35m|――――――――――――――: \033[0;37mVirtual Hosts\033[0;35m :―――――――――――――――――――――\033[1;32m"
+echo "
+$Pur|―――――――――――――――――: $Whi System Data$Pur :――――――――――――――――――――
+$Pur|  $Whi Hostname    $Pur= $BGre$HNAME
+$Pur|  $Whi Public IP   $Pur= $BGre$IPADDR
+$Pur|  $Whi Private IP  $Pur= $BGre$PRIVIP
+$Pur|  $Whi Kernel      $Pur= $BGre$KERNEL
+$Pur|  $Whi Distro      $Pur= $BGre$DISTRO
+$Pur|  $Whi Uptime      $Pur=$BGre$UTIME
+$Pur|  $Whi Load Avg    $Pur=$BGre$LOADAVG
+$Pur|  $Whi CPU         $Pur=$BGre$CPUINFO @ $CPUFREQ mhz
+$Pur|  $Whi Memory      $Pur= $BGre$MEMINFO MB
+$Pur|―――――――――――――――――: $Whi User Data$Pur :――――――――――――――――――――――
+$Pur|  $Whi Username    $Pur= $BGre$LOGNAME
+$Pur|  $Whi Privileges  $Pur= $BGre$PRIVILEGED
+$Pur|  $Whi TMUX        $Pur= $BGre$TMUXS Windows
+$Pur|  $Whi Processes   $Pur= $BGre$PROCCOUNT of `ulimit`
+$Pur|――――――――――――――: $Whi Virtual Hosts$Pur :―――――――――――――――――――――$BGre"
 
 
 ## Nginx VHOST Config
-if [ -f $HOME/bin/nginx_vhost.sh ]; then
-         $HOME/bin/nginx_vhost.sh
+if [ -f `dirname "0"`/nginx_vhost.sh ]; then
+  echo "N̲g̲i̲n̲x̲ ̲V̲h̲o̲s̲t̲s̲ ̲D̲e̲t̲e̲c̲t̲e̲d̲:"
+  $(dirname "0")/nginx_vhost.sh
     else
-  return
+  echo 
 fi
 
 ## Maintenance MOTD
 if [ -f /etc/motd-maint ]; then
-  echo -e "
-\033[0;35m――――――――――――: \033[0;31mMaintenance Information\033[0;35m :――――――――――――――
-\033[0;31m  `cat /etc/motd-maint`
-\033[0;35m―――――――――――――――――――――――――――――――――――――――――――――――――――――
-\033[0;0m
+  echo "
+$Pur――――――――――――: $RedMaintenance Information$Pur :――――――――――――――
+$Red  `cat /etc/motd-maint`
+$Pur―――――――――――――――――――――――――――――――――――――――――――――――――――――
+$RCol
   "
 else
-  echo -e "\033[0;35m―――――――――――――――――――――――――――――――――――――――――――――――――――――"
+  echo "$Pur―――――――――――――――――――――――――――――――――――――――――――――――――――――"
 fi
