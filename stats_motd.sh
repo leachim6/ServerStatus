@@ -18,7 +18,12 @@ CPUINFO=`cat /proc/cpuinfo | grep -m1 "model name" | awk -F: {'print $2'}`
 CPUFREQ=`cat /proc/cpuinfo | grep -m1 "MHz" | awk -F: {'print $2'}`
 MEMINFO=`cat /proc/meminfo | grep MemTotal | awk {'print $2 / 1024'}`
 DISTRO=`cat /etc/*release | grep "PRETTY_NAME" | cut -d "=" -f 2- | sed 's/"//g'`
-TMUXS=`tmux ls | head -1 | cut -d" " -f 2`
+
+if `pgrep tmux`; then
+  TMUXS=`tmux ls | head -1 | cut -d" " -f 2`
+else
+  TMUXS="0"
+fi
 
 if [ $LOGNAME = 'root' ]; then
 PRIVILEGED="Administrator"
@@ -44,7 +49,6 @@ $Pur|  $Whi Privileges  $Pur= $BGre$PRIVILEGED
 $Pur|  $Whi TMUX        $Pur= $BGre$TMUXS Windows
 $Pur|  $Whi Processes   $Pur= $BGre$PROCCOUNT of `ulimit`
 $Pur|――――――――――――――: $Whi Virtual Hosts$Pur :―――――――――――――――――――――$BGre"
-
 
 ## Nginx VHOST Config
 if [ -f `dirname "0"`/nginx_vhost.sh ]; then
