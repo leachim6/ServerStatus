@@ -19,7 +19,7 @@ CPUFREQ=`cat /proc/cpuinfo | grep -m1 "MHz" | awk -F: {'print $2'}`
 MEMINFO=`cat /proc/meminfo | grep MemTotal | awk {'print $2 / 1024'}`
 DISTRO=`cat /etc/*release | grep "PRETTY_NAME" | cut -d "=" -f 2- | sed 's/"//g'`
 
-if `pgrep tmux`; then
+if `pgrep tmux >/dev/null`; then
   TMUXS=`tmux ls | head -1 | cut -d" " -f 2`
 else
   TMUXS="0"
@@ -52,7 +52,7 @@ $Pur|――――――――――――――: $Whi Virtual Hosts$Pur :――�
 
 ## Nginx VHOST Config
 if [ -f `dirname "0"`/nginx_vhost.sh ]; then
-  echo "N̲g̲i̲n̲x̲ ̲V̲h̲o̲s̲t̲s̲ ̲D̲e̲t̲e̲c̲t̲e̲d̲:"
+  echo "$Pur|$RCol N̲g̲i̲n̲x̲ ̲V̲h̲o̲s̲t̲s̲ ̲D̲e̲t̲e̲c̲t̲e̲d̲:"
   $(dirname "0")/nginx_vhost.sh
     else
   echo 
@@ -61,7 +61,7 @@ fi
 ## Maintenance MOTD
 if [ -f /etc/motd-maint ]; then
   echo "
-$Pur――――――――――――: $RedMaintenance Information$Pur :――――――――――――――
+$Pur――――――――――――: $Red Maintenance Information$Pur :――――――――――――――
 $Red  `cat /etc/motd-maint`
 $Pur―――――――――――――――――――――――――――――――――――――――――――――――――――――
 $RCol
