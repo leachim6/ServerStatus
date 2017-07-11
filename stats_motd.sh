@@ -1,9 +1,10 @@
 #!/bin/sh
 # MOTD by Chris Purcell 2017
 # Revised by Mike Donaghy
-# Version 0.2 EVN BETR EDITION
+# Version 0.3a xTRA BITCHIN' EDITION
 
 # Load Bash Colors Library
+cd $(dirname $(realpath $0))
 . $(dirname "0")/bash_colors.sh
 
 HNAME=`uname -n`
@@ -32,7 +33,7 @@ PRIVILEGED="Regular User"
 fi
 
 ## System Stats Section
-echo "
+/bin/echo -e "
 $Pur|―――――――――――――――――: $Whi System Data$Pur :――――――――――――――――――――
 $Pur|  $Whi Hostname    $Pur= $BGre$HNAME
 $Pur|  $Whi Public IP   $Pur= $BGre$IPADDR
@@ -52,20 +53,20 @@ $Pur|――――――――――――――: $Whi Virtual Hosts$Pur :――�
 
 ## Nginx VHOST Config
 if [ -f `dirname "0"`/nginx_vhost.sh ]; then
-  echo "$Pur|$RCol N̲g̲i̲n̲x̲ ̲V̲h̲o̲s̲t̲s̲ ̲D̲e̲t̲e̲c̲t̲e̲d̲:"
+  if `pgrep -x nginx > /dev/null`; then
+  /bin/echo -e "$Pur|$RCol N̲g̲i̲n̲x̲ ̲V̲h̲o̲s̲t̲s̲ ̲D̲e̲t̲e̲c̲t̲e̲d̲:"
   $(dirname "0")/nginx_vhost.sh
-    else
-  echo 
+  fi
 fi
 
 ## Maintenance MOTD
 if [ -f /etc/motd-maint ]; then
-  echo "
+  /bin/echo -e "
 $Pur――――――――――――: $Red Maintenance Information$Pur :――――――――――――――
 $Red  `cat /etc/motd-maint`
 $Pur―――――――――――――――――――――――――――――――――――――――――――――――――――――
 $RCol
   "
 else
-  echo "$Pur―――――――――――――――――――――――――――――――――――――――――――――――――――――"
+  /bin/echo -e "$Pur―――――――――――――――――――――――――――――――――――――――――――――――――――――"
 fi
